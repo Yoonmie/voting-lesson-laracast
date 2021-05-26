@@ -15,6 +15,6 @@ class CommunityLinkSeeder extends Seeder
      */
     public function run()
     {
-        CommunityLink::factory()->times(5)->create();
+        CommunityLink::factory()->times(50)->create();
     }
 }
