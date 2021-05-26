@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ComminityLinksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('community',[ComminityLinksController::class, 'index']);
+Route::post('community',[ComminityLinksController::class, 'store']);
 
 Auth::routes();
 

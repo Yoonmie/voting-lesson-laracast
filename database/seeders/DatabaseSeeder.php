@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\CommunityLink;
 use Illuminate\Database\Seeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(CommunityLinkSeeder::class);
+        // $this->call(CommunitySeeder::class);
         // \App\Models\User::factory(10)->create();
+        // \App\Models\CommunityLink::factory(10)->create();
     }
 }
