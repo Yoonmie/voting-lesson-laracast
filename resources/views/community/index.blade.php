@@ -1,31 +1,22 @@
 @extends('layouts.app')
 @section('content')
    {{-- <div class="container"> --}}
+       <div class="form-group">
+            <div class="d-inline p-2 "> <a href="{{ request()->url() }}">Recent Posts</a></div>|
+            <div class="d-inline p-2"><a href="{{ url('/popular') }}">Popular Post</a></div>
+       </div>
+    
        <div class="row">
             <div class="col-md-8">
-                <h1>Community</h1>
+                <a href="/community"><h1>Community</h1></a>
 
-                <ul class="Links">
-                    @if (count($links))
-                    @foreach ($links as $link)
-                        <li class="Links_link">
-                            <span class="label label-default" style="background: {{ $link->channel->color }}">{{ $link->channel->title }}</span>
+                @if ($channel->exists)
+                <span>&mdash; {{ $channel->slug }}</span>
+                    
+                @endif
 
-                            <a href="{{ $link->link }}" target="_blank">
-                                {{ $link-> title }}
-                            </a>
-
-                            <small>
-                                Contributed by <a href="">{{ $link->creator->name }}</a> {{ $link->updated_at->diffForHumans() }}
-                            </small>
-                        </li>
-                    @endforeach
-                    @else
-                       <li class="Links_link">
-                            No contributions yet
-                        </li> 
-                    @endif
-                </ul>
+                @include('community.list')
+                {{-- @include('community.popular') --}}
             </div>
            @include('community.add-link')
        </div>

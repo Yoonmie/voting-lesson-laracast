@@ -36,6 +36,17 @@ class CommunityLink extends Model
         return $this->fill($attributes)->save();
     }
 
+    public function scopeForChannel($builder, $channel)
+    {
+        if($channel->exists) {
+            return $builder->where('channel_id', $channel->id);//checking channel_id is same with channel model in id.
+        }
+        else{
+            return $builder;
+        }
+        
+    }
+
     public function approve()
     {
         $this->approved = true;
@@ -51,6 +62,11 @@ class CommunityLink extends Model
     public function channel()
     {
         return $this->belongsTo(Channel::class);
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(CommunityLinkVote::class, 'community_link_id');
     }
 
 }

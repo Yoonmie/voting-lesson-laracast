@@ -9,11 +9,24 @@ use Illuminate\Support\Facades\Auth;
 
 class ComminityLinksController extends Controller
 {
-    public function index()
+    public function index(Channel $channel)
     {
-        $links = CommunityLink::where('approved', 1)->paginate(5);
+    //    $orderBy = request()->exists('popular') ? 'vote_count' : 'updated_at';
+
+    //     $links = CommunityLink::with('creator', 'channel')
+    //     ->withCount('votes')
+    //     ->forChannel($channel)
+    //     ->where('approved', 1)
+    //     ->orderBy($orderBy, 'desc')
+    //     ->paginate(3);
+
+        $links = CommunityLink::with('votes')->forChannel($channel)
+        ->where('approved', 1)
+        ->latest('updated_at')
+        ->paginate(5);
+
         $channels = Channel::orderBy('title', 'asc')->get();
-        return view('community.index', compact('links', 'channels'));
+        return view('community.index', compact('links', 'channels', 'channel'));
     }
 
     public function store(Request $request)
@@ -24,7 +37,7 @@ class ComminityLinksController extends Controller
         $this->validate($request, [
             'channel_id' => 'required|exists:channels,id',
             'title' => 'required',
-            'link' => 'required|active_url|unique:community_links'
+            'link' => 'required|active_url',
         ]);
 
        CommunityLink::from(auth()->user())->contribute($request->all());//save data
@@ -39,5 +52,31 @@ class ComminityLinksController extends Controller
             // flash()->overlay('This contribution will be approved shortly','Thanks!');
         }
        return back();
+    }
+
+    public function popular(Channel $channel)
+    {
+        // dd('hi');
+        // $orderBy = request()->exists('popular') ? 'vote_count' : '';
+
+        // $links = CommunityLink::with('creator', 'channel')
+        // ->withCount('votes')
+        // ->forChannel($channel)
+        // ->where('approved', 1)
+        // ->orderBy($orderBy, 'desc')
+        // ->paginate(3);
+        
+        $links = CommunityLink::with('votes')->forChannel($channel)
+        ->where('approved', 1)
+        ->latest('updated_at')
+        ->paginate(10);
+
+        $links = $links->sortByDesc(function ($link){
+            return $link->votes->count();
+        });
+
+
+        $channels = Channel::orderBy('title', 'asc')->get();
+        return view('community.popular', compact('links', 'channels', 'channel'));
     }
 }

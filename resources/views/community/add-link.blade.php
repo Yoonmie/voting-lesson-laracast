@@ -21,13 +21,15 @@
                 <div class="form-group">
                     <label for="title">Title:</label>
                     <input type="text" id="title" class="form-control @error('title') border-danger @enderror" value="{{ old('title') }}" name="title" placeholder="What is the title of the article?">
-                    {!! $errors->first('title', '<span class="Error text-danger">:message</span>') !!}
+                    {{-- {!! $errors->first('title', '<span class="Error text-danger">:message</span>') !!} --}}
+                    @error('title') <span class="Error text-danger">{{$message}}</span> @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="link">Link:</label>
-                    <input type="text" id="link" class="form-control" name="link" placeholder="What is the URL?">
-                    {!! $errors->first('link', '<span class="Error">:message</span>') !!}
+                    <input type="text" id="link" class="form-control @error('link') border-danger @enderror" name="link" placeholder="What is the URL?">
+                    {{-- {!! $errors->first('link', '<span class="Error">:message</span>') !!} --}}
+                    @error('link')  <span class="Error text-danger">{{$message}}</span> @enderror
                 </div>
 
                 <div class="form-group">

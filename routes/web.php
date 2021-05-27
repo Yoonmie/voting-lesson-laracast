@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComminityLinksController;
+use App\Http\Controllers\VotesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,11 @@ Route::get('/', function () {
 
 Route::get('community',[ComminityLinksController::class, 'index']);
 Route::post('community',[ComminityLinksController::class, 'store']);
+Route::get('community/{channel}',[ComminityLinksController::class, 'index']);
+Route::get('popular',[ComminityLinksController::class, 'popular'])->name('popular');
+// Route::get('community/links/{link}/votes',[ComminityLinksController::class, 'toggleVote']);
+
+Route::post('votes/{link}',[VotesController::class, 'store']);
 
 Auth::routes();
 
