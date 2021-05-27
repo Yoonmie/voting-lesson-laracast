@@ -75,9 +75,21 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="container">
+            <main class="py-4">
+                <div class="mt-3 mb-5">
+                    @include('flash::message')
+                </div>
+               
+    
+                @yield('content')
+            </main>
+        </div>  
     </div>
+    <script>
+        $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+
+        $('#flash-overlay-modal').modal();
+    </script>
 </body>
 </html>

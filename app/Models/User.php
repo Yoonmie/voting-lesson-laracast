@@ -40,4 +40,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isTrusted()
+    {
+        return !! $this->trusted;//!! for boolean 0 and 1;
+    }
+
 }

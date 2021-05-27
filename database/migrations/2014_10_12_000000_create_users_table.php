@@ -18,7 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            // $user->password = bcrypt('secret');
+            // $table->Hash::make('secret');
             $table->string('password');
+            $table->boolean('trusted')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
